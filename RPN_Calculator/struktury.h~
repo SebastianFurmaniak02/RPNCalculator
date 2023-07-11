@@ -1,0 +1,9 @@
+#ifndef STRUKTURY_H
+#define STRUKTURY_H
+
+typedef struct elem {
+  int liczba;
+  struct elem *nastepny;
+} t_elem;
+
+#endif 

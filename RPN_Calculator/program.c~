@@ -1,0 +1,66 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include "struktury.h"
+
+t_elem *inicjuj() { return NULL; }
+
+void push(t_elem **stos, int arg) {
+    /* na poczatek listy */
+    t_elem *pom;
+    pom = (t_elem *)malloc(sizeof(t_elem)); /* utworz element */
+    pom->liczba = arg;
+    pom->nastepny = *stos;
+    *stos = pom;
+    pom=NULL;
+} /* push */
+
+void pop(t_elem **stos, int *arg) {
+    /* wylacza pierwszy element z listy, i zwraca argument */
+    t_elem * pom=NULL;
+    if (*stos!=NULL) {
+        *arg=(*stos)->liczba;
+   	    pom=(*stos)->nastepny;
+   	    free(*stos);
+   	    *stos=pom;	
+	}
+    else printf("Stos jest pusty\n");
+} /* pop */
+
+void print(t_elem *stos) {
+    /* Wyswietla stos */
+    printf("\nStos:\n");
+    if (stos!=NULL) {
+        t_elem *pom=stos;
+            do {
+            printf("%i", pom->liczba);
+            printf("\n");
+            pom = pom->nastepny;
+            } while (pom != NULL);
+    }
+    else printf("Stos jest pusty\n");
+}  /* print */
+
+int empty(t_elem *stos) {
+    /* Czy na stosie sa elementy? */
+    if (stos==NULL)
+      return 0;
+    return 1;
+} /* empty */
+
+int main () {
+    t_elem *stos;
+    int arg;
+    
+    stos=(t_elem *)malloc(sizeof(t_elem));
+    stos=inicjuj(); //inicjacja
+    
+    push(&stos,5); //push
+    push(&stos,6); //push
+    print(stos); //print
+    printf("\n"); 
+    pop(&stos,&arg); //pop
+    printf("%d\n",arg); //arg od pop
+    
+  return 0;
+}

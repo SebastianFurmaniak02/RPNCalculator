@@ -1,0 +1,15 @@
+
+KalkulatorRPN: main.o kalkulator.o operacje.o
+	gcc main.o kalkulator.o operacje.o -o KalkulatorRPN -lm
+
+main.o: main.c kalkulator.h operacje.h
+	gcc main.c -c
+
+kalkulator.o: kalkulator.c kalkulator.h
+	gcc kalkulator.c -c -lm
+
+operacje.o: operacje.c operacje.h
+	gcc operacje.c -c
+	
+clean:
+	rm *.o

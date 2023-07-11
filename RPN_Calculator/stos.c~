@@ -1,0 +1,98 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include "struktury.h"
+
+void push(t_elem **stos, int arg) {
+    /* na poczatek listy */
+    t_elem *pom;
+    pom = (t_elem *)malloc(sizeof(t_elem)); /* utworz element */
+    pom->liczba = arg;
+    pom->nastepny = *stos;
+    *stos = pom;
+    pom=NULL;
+} /* push */
+
+void pop(t_elem **stos, int *arg) {
+    /* wylacza pierwszy element z listy, i zwraca argument */
+    t_elem * pom=NULL;
+    printf("\n");
+    if (*stos!=NULL) {
+        *arg=(*stos)->liczba;
+   	    pom=(*stos)->nastepny;
+   	    free(*stos);
+   	    *stos=pom;	
+	}
+    else printf("Stos jest pusty\n");
+} /* pop */
+
+void print(t_elem *stos) {
+    /* Wyswietla stos */
+    printf("\nStos:\n");
+    if (stos!=NULL) {
+        t_elem *pom=stos;
+            do {
+            printf("%i", pom->liczba);
+            printf("\n");
+            pom = pom->nastepny;
+            } while (pom != NULL);
+    }
+    else printf("Stos jest pusty\n");
+}  /* print */
+
+void empty(t_elem *stos) {
+    /* Czy na stosie sa elementy? */
+    printf("\n");
+    if (stos==NULL) printf("Stos jest pusty\n");
+    else printf("Stos ma argumenty\n");
+
+} /* empty */
+
+void inicjuj(t_elem *stos) {
+    if (stos==NULL) {
+        stos = (t_elem *)malloc(sizeof(t_elem));
+        stos = NULL; /* zainicjuj pusta liste */
+    }
+    else printf("Stos istnieje\n");
+} /* inicjuj */
+
+int main () {
+    char wybor[2]= " ";
+    t_elem *stos;
+    int arg;
+
+  while (wybor[0] != '0') {
+    printf("Proste menu:\n");
+    printf("  1 - push\n");
+    printf("  2 - pop\n");
+    printf("  3 - print\n");
+    printf("  4 - empty\n");
+    printf("  5 - inicjuj\n");
+    printf("  0 - koniec\n");
+    printf("Twoj wybor: ");
+    scanf("%s",wybor);
+
+    switch (wybor[0]) {
+    case '1': 
+        printf("Podaj argument: ");
+        scanf("%d",&arg);
+        push(&stos, arg);
+        break;
+    case '2':  
+        pop(&stos, &arg);
+        printf("Usunieto: %d\n", arg);
+        break;
+    case '3': print(stos);
+        break;
+    case '4': empty(stos); 
+        break;
+    case '5': inicjuj(stos);
+        break;
+    case '0': printf("Ucieczka\n");
+        break;
+    default : printf("Nie rozpoznano wyboru\n\n"); 
+        break;
+    }	    
+  }
+  return 0;
+}
